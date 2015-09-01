@@ -1,0 +1,30 @@
+<!doctype html>
+
+<title>Passing an Array to annotater</title>
+
+<article>
+  <h1>Passing an Array to <code>annotater</code></h1>
+  <p> you can pass an array to the factory's argument, letting <br>
+      you keep things a little more concise.
+      </p>
+  <p> there's one notable difference
+      </p>
+  <ul>
+    <li> the factory returns an array
+  </ul>
+</article>
+
+<script src="../annotater.js"></script>
+<script>
+  annotater([{
+    name: /factory(?!')/, // NOTE: use negative lookaheads instead of
+                          //       positive lookaheads ---> /factory(?=')/
+    tooltip: "that is, the function \"annotater\" (lowercase) the constructor (uppercase A) only takes a single object"
+  },{
+    name: "concise",
+    tooltip: "brevity is nice!"
+  },{
+    name: "Passing an Array",
+    tooltip: "y'know fancy function signatures and such"
+  }]);
+</script>
