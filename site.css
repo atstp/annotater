@@ -1,0 +1,72 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,700,400italic,600,300italic,300,800|Raleway:400,500,700,300);
+
+html, body{
+  min-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+html{
+  height: 100%;
+}
+body{
+  font-family: 'Montserrat',sans-serif;
+  min-height: 100%;
+}
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Raleway',sans-serif;
+  font-weight: 400;
+}
+code{
+  padding: 4px;
+  background: #f4f7f8;
+}
+pre, code,
+pre code {
+  overflow: visible;
+}
+
+footer.site-footer{
+    background: inherit;
+    text-align:center;
+    padding: 50px 0px;
+    }
+header.site-header{
+  width: 100%;
+  display:block;
+  padding: 50px 0;
+  }
+  header.site-header:before,
+  header.site-header:after {
+      content: " ";
+      display: table;
+      }
+  header.site-header:after {
+      clear: both;
+      }
+.site-logo {
+    float: left;
+    display: inline;
+    width: 50%;
+    }
+
+.site-links {
+    float: left;
+    display: inline;
+    width: 50%;
+    font-size: 16px;
+    }
+    .site-links ul{
+        }
+    .site-links li{
+        }
+@media (max-width: 700px){
+    .site-logo,
+    .site-links {
+        width: 100%;
+        text-align: center;
+        }
+}

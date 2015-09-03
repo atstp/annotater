@@ -1,0 +1,12 @@
+{% if page.annotater %} <script>
+
+{% for anno in page.annotater %}
+    annotater({
+    {% for notation in anno %}
+        {{notation[0]}}: "{{ notation[1] }}",
+    {% endfor %}
+    });
+{% endfor %}
+
+</script> {% endif %}
+
