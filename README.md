@@ -1,28 +1,37 @@
 # [![annotater](http://atstp.github.io/annotater/annotater.svg)](http://atstp.github.io/annotater/)
 
-> a super-lightweight annotating tool
+> a minimal, versatile annotating tool
 
 `annotater` takes a target string (or regex) and hunts down every instance,
-chops it out of it's text node, wraps it in a new tag, and adds a tooltip.
+chops it out of it's text node, wraps it in a tag, and adds a tooltip.
 
-this makes it _perfect_ for annotating text written as markdown.
+this makes it _perfect_ for annotating rendered markdown.
+
+[demos](http://atstp.github.io/annotater/)
 
 ### cursory use
 
 include the library, `annotater.js`, and use it
 
     annotater({
-        name: 'YOUR1234EXAMPLEAPIKEY5678',
-        tooltip: "this isn't a working key the key you should use. " +
-                 "Get your own from the developer site"
+        name: 'stackoverflow.com',
+        tooltip: 'you will likely stumble upon it during every bug hunt'
     });
 
     annotater({
         name: /foo|bar|baz/,
-        tooltip: 'this is a placeholder variable, that means ' +
-                 '"you can use anything here"'
+        tooltip: 'this is a placeholder variable that means "you can use anything here"'
     });
 
-more [details and demos](http://atstp.github.io/annotater/)
 
 it's also availablie via `bower install annotater`
+
+--------------------------------------------------------------------------------
+
+that's the gist, but it does more than tooltips:
+[tooltip interpolation](http://atstp.github.io/annotater/built-in-interpolation/),
+function templating,
+[live models](http://atstp.github.io/annotater/making-live-models/),
+match replacement,
+[jekyll friendliness](http://atstp.github.io/annotater/using-with-jekyll/),
+and more.
