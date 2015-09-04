@@ -1,5 +1,7 @@
 (function(global,doc){ 'use strict';
 
+  var __all = [];
+
   global.Annotater = function(options){
 
       // handle short code
@@ -19,6 +21,9 @@
       this._processMatches();   // builds an array at this._vars
       this._replaceTextNodes(); // replaces each of the identified text nodes
                                 // with a <var> element
+
+      __all = __all.concat(this._vars);
+
       return this;
   };
 
@@ -75,6 +80,7 @@
               this._vars.push({
                   textNode: startsWithMatch,
                   name: startsWithMatch.data,
+                  parent: this
               });
           }
       },
@@ -179,11 +185,13 @@
                   }
 
                   // init state
-                  deactivateToolTip.call(item, item, this);
+                  deactivateToolTip.call(item);
 
                   // events
-                  item.container.addEventListener('mouseleave', deactivateToolTip.bind(item, item, this));
-                  item.container.addEventListener('mouseover', activateToolTip.bind(item, item, this));
+                  item.container.addEventListener('mouseleave', deactivateToolTip.bind(item));
+                  item.container.addEventListener('mouseover', activateToolTip.bind(item));
+                  // hacky for now
+                  item.container.addEventListener('click', function(e){e.stopPropagation();});
               }
           }
       },
@@ -235,25 +243,27 @@
   };
 
   function deactivateToolTip(item, self){
-      if(self.autoStyle){
+      if(this.parent.autoStyle){
           this.toolTip.style.opacity = 0;
           this.toolTip.style.pointerEvents = 'none';
           this.varTag.style.textShadow = 'none';
-          item.container.style.zIndex = 0;
-          this.timeout = setTimeout(function(){
-              item.toolTip.style.display = 'none';
-          }, 1500);
+          this.container.style.zIndex = 0;
+          this.timeout = setTimeout((function(){
+              this.toolTip.style.display = 'none';
+          }).bind(this), 1500);
       }
       this.varTag.classList.add('tooltip-closed');
       this.varTag.classList.remove('tooltip-open');
   }
-  function activateToolTip(item, self){
+
+  function activateToolTip(){
+      for(var item in __all){ deactivateToolTip.call(__all[item]); } // get suuuuper hacky
       // cast to number nonsense
       var topPadding = +window.getComputedStyle(this.varTag, null).lineHeight.replace(/[^0-9.]/g,'') + 10;
-      if(self.autoStyle){
+      if(this.parent.autoStyle){
           clearTimeout(this.timeout);
-          item.container.style.zIndex = 1;
-          item.toolTip.style.display = 'block';
+          this.container.style.zIndex = 1;
+          this.toolTip.style.display = 'block';
           this.toolTip.style.opacity = 1;
           this.toolTip.style.pointerEvents = 'all';
           this.toolTip.style.paddingTop = topPadding + 'px';
@@ -314,6 +324,11 @@
       }
   }
 
+  document.addEventListener('click',function(){
+      for(var item in __all){
+          deactivateToolTip.call(__all[item]);
+      }
+  });
   //
   // factory method                            makes this == this
   //     var myVariable = new Annotater(args); // <--*       /
