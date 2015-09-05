@@ -1,6 +1,6 @@
 (function(global,doc){ 'use strict';
 
-  var __all = [];
+  var __allOpen = [];
 
   global.Annotater = function(options){
 
@@ -21,8 +21,6 @@
       this._processMatches();   // builds an array at this._vars
       this._replaceTextNodes(); // replaces each of the identified text nodes
                                 // with a <var> element
-
-      __all = __all.concat(this._vars);
 
       return this;
   };
@@ -254,12 +252,15 @@
       }
       this.varTag.classList.add('tooltip-closed');
       this.varTag.classList.remove('tooltip-open');
+      if(__allOpen.indexOf(this) > -1){
+          __allOpen.splice(__allOpen.indexOf(this),1);
+      }
   }
 
   function activateToolTip(){
-      for(var item in __all){
-          if(__all[item] !== this){
-              deactivateToolTip.call(__all[item]);
+      for(var item in __allOpen){
+          if(__allOpen[item] !== this){
+              deactivateToolTip.call(__allOpen[item]);
           }
       }
       // cast to number nonsense
@@ -281,6 +282,7 @@
       }
       this.varTag.classList.add('tooltip-open');
       this.varTag.classList.remove('tooltip-closed');
+      __allOpen.push(this);
   }
 
   //
@@ -329,8 +331,8 @@
   }
 
   document.addEventListener('click',function(){
-      for(var item in __all){
-          deactivateToolTip.call(__all[item]);
+      for(var item in __allOpen){
+          deactivateToolTip.call(__allOpen[item]);
       }
   });
   //
