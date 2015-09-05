@@ -257,7 +257,11 @@
   }
 
   function activateToolTip(){
-      for(var item in __all){ deactivateToolTip.call(__all[item]); } // get suuuuper hacky
+      for(var item in __all){
+          if(__all[item] !== this){
+              deactivateToolTip.call(__all[item]);
+          }
+      }
       // cast to number nonsense
       var topPadding = +window.getComputedStyle(this.varTag, null).lineHeight.replace(/[^0-9.]/g,'') + 10;
       if(this.parent.autoStyle){
